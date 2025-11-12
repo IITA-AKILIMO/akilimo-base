@@ -9,7 +9,7 @@ ENV LANG en_US.UTF-8
 ENV R_USER akilimo
 ENV R_GROUP akilimo
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=Africa/Nairobi
+ENV TZ=UTC
 
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
