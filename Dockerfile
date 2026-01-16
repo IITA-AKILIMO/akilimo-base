@@ -1,4 +1,6 @@
-FROM ubuntu:18.04
+FROM ubuntu:18.10 as builder
+
+WORKDIR /builder
 
 LABEL maintainer="Sammy Barasa <barsamms@gmail.com>"
 LABEL version=3.6.1
@@ -100,6 +102,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/
 
 
+
 #Reconfigure java
 RUN R CMD javareconf
 RUN R --version
@@ -111,8 +114,15 @@ RUN tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share
 RUN ln -sf /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin
 
 RUN phantomjs --version
+
+FROM alpine:latest
+
+
 # copy the setup script, run it, then delete it
-COPY setup.R /
+COPY setup.R setup.R
+
+COPY --from=builder / /builder
+
 RUN Rscript setup.R && rm setup.R
 
 

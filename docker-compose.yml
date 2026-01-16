@@ -1,0 +1,9 @@
+version: "3"
+services:
+  akilimo-base:
+    image: iita/akilimo-base:latest
+    container_name: akilimo-base
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "no"
